@@ -2,8 +2,11 @@ import streamlit as st
 from pycocotools.coco import COCO
 import json
 import os 
+import tkinter as tk
+from tkinter import filedialog
 
 #---DEFAULT PARAMETERS---
+
 
 SOURCE_FILE = 'output.json'
 temp_json = {
@@ -15,7 +18,12 @@ temp_json = {
 }
 #---FUNCTIONS---
 
-
+def select_folder():
+    root = tk.Tk()
+    root.withdraw()
+    root.wm_attributes('-topmost', 1)
+    folder_path = filedialog.askdirectory(master=root)
+    return folder_path
 
 def coco_merge(
     input_extend: str, input_add: str, output_file: str, indent = None,
@@ -94,10 +102,18 @@ def coco_merge(
     return output_file
 
 def merge_coco_json(input_path, output_file):
-    for file in os.listdir(input_path):
-        if file.endswith('json'):
-            file_path = os.path.join(input_path, file)
-            coco_merge(output_file, file_path, output_file)
+    if len(os.listdir(input_path)) == 0:
+        st.warning('The directory is empty!')
+    else:
+        progress_text = "Operation in progress. Please wait."
+        my_bar = st.progress(0, text=progress_text)
+        progress_step = 100 / len(os.listdir)
+        begin = 0
+        for file in os.listdir(input_path):
+            if file.endswith('json'):
+                file_path = os.path.join(input_path, file)
+                coco_merge(output_file, file_path, output_file)
+                my_bar.progress(begin+progress_step, progress_text)
 
 #---DEFAULT PARAMETERS--
 
@@ -108,14 +124,28 @@ st.markdown("<h1 style='text-align: center;'> COCO MERGER</h1>", unsafe_allow_ht
 st.markdown("---")
 
 #---MERGER---
-
-input_path = st.text_input('Please set up the path to folder for the input', value='D:\\cleaned_datasets\\coco')
-output_path = st.text_input('Please set up the folder for the output:', value='C:\\Users\\user\\Downloads')
+input_folder_path = st.session_state.get("input_folder_path", None)
+output_folder_path = st.session_state.get("output_folder_path", None)
+input_button = st.button("Select Input Folder")
+if input_folder_path != None:
+    input_path = st.text_input('Please set up the path to folder for the input', value=input_folder_path)
+output_button = st.button("Select Output Folder")
+if output_folder_path != None:
+    output_path = st.text_input('Please set up the folder for the output:', value=output_folder_path)
+if input_button:
+    selected_folder_path = select_folder()
+    st.session_state.input_folder_path = selected_folder_path
+    input_path = st.text_input('Please set up the path to folder for the input', value=selected_folder_path)
+    print('here!')
+if output_button:
+    selected_folder_path = select_folder()
+    st.session_state.output_folder_path = selected_folder_path
+    output_path = st.text_input('Please set up the folder for the output:', value=selected_folder_path)
+    print('there')
 submit_btn = st.button('Submit') #on_click(merge)
 if submit_btn:
     if os.path.isdir(input_path) and os.path.isdir(output_path):
         output_file = output_path + '\\annotations_coco_merged.json'
         with open(output_file, 'w', encoding="ISO-8859-1") as f:
             json.dump(temp_json, f, indent=4, ensure_ascii=False)
-
         merge_coco_json(input_path, output_file)
