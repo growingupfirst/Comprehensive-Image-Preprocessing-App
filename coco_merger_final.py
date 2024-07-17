@@ -1,22 +1,7 @@
-import streamlit as st
-from pycocotools.coco import COCO
 import json
-import os 
+import os
 
-#---DEFAULT PARAMETERS---
-
-SOURCE_FILE = 'output.json'
-temp_json = {
-    'info': {},
-    'licenses':[],
-    'categories':[],
-    'images':[],
-    'annotations':[]
-}
-#---FUNCTIONS---
-
-
-
+source_file = 'output.json'
 def coco_merge(
     input_extend: str, input_add: str, output_file: str, indent = None,
 ) -> str:
@@ -58,10 +43,7 @@ def coco_merge(
             if new_id is not None:
                 cat_id_map[new_cat["id"]] = new_id
             else:
-                try:
-                    new_cat_id = max(c["id"] for c in output["categories"]) + 1
-                except ValueError:
-                    new_cat_id = 0
+                new_cat_id = max(c["id"] for c in output["categories"]) + 1
                 cat_id_map[new_cat["id"]] = new_cat_id
                 new_cat["id"] = new_cat_id
                 output["categories"].append(new_cat)
@@ -93,29 +75,10 @@ def coco_merge(
 
     return output_file
 
-def merge_coco_json(input_path, output_file):
-    for file in os.listdir(input_path):
-        if file.endswith('json'):
-            file_path = os.path.join(input_path, file)
-            coco_merge(output_file, file_path, output_file)
-
-#---DEFAULT PARAMETERS--
-
-#---FUNCTIONS---
-
-#---HEADLINE---
-st.markdown("<h1 style='text-align: center;'> COCO MERGER</h1>", unsafe_allow_html=True)
-st.markdown("---")
-
-#---MERGER---
-
-input_path = st.text_input('Please set up the path to folder for the input', value='D:\\cleaned_datasets\\coco')
-output_path = st.text_input('Please set up the folder for the output:', value='C:\\Users\\user\\Downloads')
-submit_btn = st.button('Submit') #on_click(merge)
-if submit_btn:
-    if os.path.isdir(input_path) and os.path.isdir(output_path):
-        output_file = output_path + '\\annotations_coco_merged.json'
-        with open(output_file, 'w', encoding="ISO-8859-1") as f:
-            json.dump(temp_json, f, indent=4, ensure_ascii=False)
-
-        merge_coco_json(input_path, output_file)
+#coco_merge("D:\\cleaned_datasets\\test\\------.v9i.coco.v1i.coco\\train\\_annotations_cleared.json",
+#  "D:\\cleaned_datasets\\test\\19 9997 Airdetect.v2i.coco\\test\\_annotations.coco.json",
+#  'output.json')
+for file in os.listdir('D:\\cocos'):
+    if file != 'output.json':
+        file_path = f'D:\\cocos\\{file}'
+        coco_merge('D:\\cocos\\output.json', file_path, 'D:\\cocos\\output.json')
