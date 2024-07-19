@@ -48,4 +48,11 @@ To train Large dataset which could not be stored in Roboflow you have to convert
 ### Images Merger (STILL UNDER WORK)
   Finally, after you've done everything above you may need to merge all the image from datasets together. This one is for you. 
 
-  
+ ## Launching
+
+```bash
+git clone https://github.com/growingupfirst/Comprehensive-Image-Preprocessing-App
+cd Comprehensive-Image-Preprocessing-App
+pip install -r requirements.txt
+streamlit run main.py
+```
