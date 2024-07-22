@@ -17,7 +17,8 @@ def load_lottiefile(filepath: str):
 meepo = load_lottiefile(SPINNER_PATH)
 
 
-def slice(input_folder, ds_type):
+def slice(input_folder, ds_type, slice_height=640, slice_width=640,
+           ignore_negative=True, overlap_height_ratio=0.2, overlap_width_ration=0.2, min_area_ratio=0.1):
     print(input_folder)
     if ds_type == 'all':
         for idx, i in enumerate(['train', 'valid', 'test']):
@@ -46,11 +47,13 @@ def slice(input_folder, ds_type):
                 coco_dict, coco_path = slice_coco(
                     coco_annotation_file_path=f'{input_folder}\\{ds_type}\\_annotations.coco.json', ##change between train/valid/test
                     image_dir=f'{input_folder}\\{ds_type}',
-                    slice_height=640,
-                    slice_width=640,
-                    overlap_height_ratio=0.2,
-                    overlap_width_ratio=0.2,
+                    slice_height=slice_height,
+                    slice_width=slice_width,
+                    overlap_height_ratio=overlap_height_ratio,
+                    overlap_width_ratio=overlap_width_ration,
+                    min_area_ratio=min_area_ratio,
                     output_dir=f'{input_folder}_sliced\\{ds_type}',
+                    ignore_negative_samples=ignore_negative,
                     output_coco_annotation_file_name='_annotations.coco.json'
                 )
                 st.success(f'Done {ds_type}')
@@ -76,7 +79,8 @@ def preprocess(archive):
                 extraction_path = archive.name
                 zip_ref.extractall(extraction_path)
                 st.empty().success("Extraction Successful!")
-                slice(extraction_path, 'all')
+                slice(extraction_path, 'all', slice_height, slice_width,
+           ignore_negative, overlap_height_ratio, overlap_width_ration, min_area_ratio)
                 # Create a new zip file with the modified images
 
 #---CODE---
@@ -97,16 +101,24 @@ if 'mtf_clicked' not in st.session_state:
 # Slicing
 st.markdown("<h1 style='text-align: center;'> Slicing✂️</h1>", unsafe_allow_html=True)
 st.markdown("---")
-custom_slice = st.text_input('You can set the custom path to the folder if needed', value=DEFAULT_SLICING_PATH)
-if custom_slice != None:
+custom_slice = st.text_input('You can set the custom path to the folder if needed', help=DEFAULT_SLICING_PATH, placeholder=DEFAULT_SLICING_PATH)
+if (custom_slice != "") :
     slice_folder = st.radio('Select folder here too', options=(foldername for foldername in os.listdir(custom_slice)), key='folderlist')
 data_type = st.radio('Select DataType:', options=('train', 'valid', 'test', 'all'))
+slice_height=st.number_input('Slice Height:', value=640)
+slice_width=st.number_input('Slice Width', value=640)
+ignore_negative=st.checkbox('Delete Images with no class?', value=True)
+overlap_height_ratio=st.slider('Overlap Height Ratio', min_value=0.1, max_value=0.99, value=0.2)
+overlap_width_ration=st.slider('Overlap Width Ratio', min_value=0.1, max_value=0.99, value=0.2)
+min_area_ratio=st.slider('Minimal Area Ratio', min_value=0.1, max_value=0.99, value=0.1)
 slicer_button = st.button('Submit', key='sl_btn')
+
 if slicer_button:
     if (custom_slice != None) and (slice_folder != None):
         slice_path = custom_slice + '\\' + slice_folder
         with st.spinner('Please wait...'): 
-            slice(slice_path, data_type)
+            slice(slice_path, data_type, slice_height, slice_width,
+           ignore_negative, overlap_height_ratio, overlap_width_ration, min_area_ratio)
         st.success('Slicing finished successfully')
     else:
         st.warning('Something is not set')

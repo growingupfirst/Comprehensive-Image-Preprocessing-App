@@ -16,10 +16,11 @@ It includes a list of tool which can help. (At least the help me every time)
 - Voc2Coco Converter
 - Paths Writer
 - File Counter
-
+- Images Merger
+            
 ⚠️Still under coding:
 - COCO2YOLO (JSON2YOLO)
-- Images Merger
+
  
 ## Detailed Description
 ### Cleaner
@@ -46,11 +47,11 @@ In order to train YOLO based models, you have to convert it to YOLO-format. One 
 ### File counter
 Basic tool which counts the files. Can be used if you need to know how much Images in total you have. (Better than using Windows Explorer calc)
 
+### Images Merger
+Finally, after you've done everything above you may need to merge all the image from datasets together. This one is for you. 
+            
 ### COCO2YOLO (STILL UNDER WORK)
 To train Large dataset which could not be stored in Roboflow you have to convert everything by hand. This tool does everything for you easily.
-
-### Images Merger (STILL UNDER WORK)
-  Finally, after you've done everything above you may need to merge all the image from datasets together. This one is for you. 
 
  ## Launching
 
