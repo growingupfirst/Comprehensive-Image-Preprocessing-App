@@ -12,6 +12,7 @@ It includes a list of tool which can help. (At least the help me every time)
 - Voc2Coco Converter
 - Paths Writer
 - File Counter
+- Class Balancer
 
 ⚠️Still under coding:
 - COCO2YOLO (JSON2YOLO)
@@ -41,6 +42,9 @@ In order to train YOLO based models, you have to convert it to YOLO-format. One 
 
 ### File counter
 Basic tool which counts the files. Can be used if you need to know how much Images in total you have. (Better than using Windows Explorer calc)
+
+### Class Balance counter
+You upload the COCO JSON and the counter shows you the graph of your classes. Helps to get better understanding of what to expect after training.
 
 ### COCO2YOLO (STILL UNDER WORK)
 To train Large dataset which could not be stored in Roboflow you have to convert everything by hand. This tool does everything for you easily.
