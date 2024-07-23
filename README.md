@@ -14,9 +14,7 @@ It includes a list of tool which can help. (At least the help me every time)
 - File Counter
 - Class Balancer
 - Images Merger
-
-⚠️Still under coding:
-- COCO2YOLO (JSON2YOLO)
+- COCO2YOLO (JSON2YOLO) 
 
  
 ## Detailed Description
@@ -50,10 +48,8 @@ You upload the COCO JSON and the counter shows you the graph of your classes. He
 ### Images Merger
 Finally, after you've done everything above you may need to merge all the image from datasets together. This one is for you. 
 
-### COCO2YOLO (STILL UNDER WORK)
+### COCO2YOLO
 To train Large dataset which could not be stored in Roboflow you have to convert everything by hand. This tool does everything for you easily.
-
-
 
  ## Launching
 
