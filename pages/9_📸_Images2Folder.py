@@ -7,7 +7,7 @@ DESTINATION_DIRECTORY = "D:\\cleaned_datasets\\images"
 
 
 #---HEADLINE---
-st.markdown("<h1 style='text-align: center;'> Images2Folder </h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'> Images2Folder 📷 </h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;'> Copies all images to one folder </h2>", unsafe_allow_html=True)
 st.markdown("---")
 # Source directory containing all the folders
@@ -15,7 +15,7 @@ source_path = st.text_input('Set the folder to look in', placeholder=SOURCE_DIRE
    # Destination directory where the files will be copied
 destination_path = st.text_input('Where to put the all the images', placeholder=DESTINATION_DIRECTORY)
 if source_path != '':
-    folders=st.selectbox(options=os.listdir(source_path))
+    folders=st.selectbox('Hello',options=os.listdir(source_path))
 sbm_button = st.button('Submit')
 if sbm_button and folders:
     placeholder1 = st.empty()

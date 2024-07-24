@@ -239,7 +239,7 @@ def coco91_to_coco80_class():  # converts 80-index (val2014) to 91-index (paper)
 
 
 #---CODE---
-st.markdown("<h1 style='text-align: center;'> COCO2YOLO Converter </h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'> COCO2YOLO Converter ❇️</h1>", unsafe_allow_html=True)
 st.markdown("---")
 
 file_path = st.text_input('Please Input the FOLDER path to the data set with JSON')

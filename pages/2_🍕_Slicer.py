@@ -99,7 +99,7 @@ if 'mtf_clicked' not in st.session_state:
 
 
 # Slicing
-st.markdown("<h1 style='text-align: center;'> Slicing✂️</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'> Slicing 🍕</h1>", unsafe_allow_html=True)
 st.markdown("---")
 custom_slice = st.text_input('You can set the custom path to the folder if needed', help=DEFAULT_SLICING_PATH, placeholder=DEFAULT_SLICING_PATH)
 if (custom_slice != "") :

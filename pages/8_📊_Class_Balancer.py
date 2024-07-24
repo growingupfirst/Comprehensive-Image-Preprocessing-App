@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 #---CODE---
-st.markdown("<h1 style='text-align: center;'> Class Balancer </h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'> Class Balancer 📊</h1>", unsafe_allow_html=True)
 st.markdown("---")
 
 # file = 'C:\\Users\\user\\Downloads\\Something.v9-stable.coco.v1i.coco\\train\\_annotations.coco.json'
